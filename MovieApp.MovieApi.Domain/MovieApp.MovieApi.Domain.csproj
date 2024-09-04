@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MongoDB.Bson" Version="2.28.0" />
     <PackageReference Include="MovieApp.Domain" Version="1.0.1" />
   </ItemGroup>
 

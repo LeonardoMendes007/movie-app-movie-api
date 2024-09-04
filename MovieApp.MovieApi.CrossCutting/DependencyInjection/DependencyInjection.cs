@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MovieApp.Application.Mapper.AutoMapperConfig;
 using MovieApp.Infra.Data.DependencyInjection;
 using MovieApp.MovieApi.Application.Facade;
-using MovieApp.MovieApi.Application.Interfaces;
+using MovieApp.MovieApi.Application.Interfaces.Facades;
+using MovieApp.MovieApi.Application.Interfaces.Services;
 using MovieApp.MovieApi.Application.Services;
 using MovieApp.MovieApi.Domain.Interfaces.Services;
 using MovieApp.MovieApi.Domain.Interfaces.UnitOfWork;
@@ -35,7 +37,8 @@ public static class DependencyInjection
         var cacheEntryOptions = new DistributedCacheEntryOptions
         {
             AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(int.Parse(absoluteExpirationRelativeToNow)), 
-            SlidingExpiration = TimeSpan.FromMinutes(int.Parse(slidingExpiration)) 
+            SlidingExpiration = TimeSpan.FromMinutes(int.Parse(slidingExpiration)),
+            
         };
 
         services.AddSingleton<DistributedCacheEntryOptions>(cacheEntryOptions);
@@ -51,11 +54,13 @@ public static class DependencyInjection
 
         #region Services
         services.AddScoped<IMovieService, MovieService>();
+        services.AddScoped<IGenreService, GenreService>();
         services.AddScoped<ICacheService, CacheService>();
         #endregion
 
         #region Facade
         services.AddScoped<IMovieFacade, MovieFacade>();
+        services.AddScoped<IGenreFacade, GenreFacade>();
         #endregion
 
         return services;

@@ -1,4 +1,5 @@
-﻿using MovieApp.MovieApi.API.Response;
+﻿using MovieApp.Domain.Exceptions;
+using MovieApp.MovieApi.API.Response;
 using System.Net;
 
 namespace MovieApp.MovieApi.API.Middleware;
@@ -20,15 +21,15 @@ public class ExceptionHandlingMiddleware
         {
             await _next(context);
         }
-        //catch (ResourceNotFoundException ex)
-        //{
-        //    _logger.LogWarning("Resource not found");
+        catch (ResourceNotFoundException ex)
+        {
+            _logger.LogWarning("Resource not found");
 
-        //    var response = ResponseBase.ResponseBaseFactory(HttpStatusCode.NotFound, ex.Message);
+            var response = ResponseBase.ResponseBaseFactory(HttpStatusCode.NotFound, ex.Message);
 
-        //    await WriteResponseAsync<ResponseBase>(context, response, HttpStatusCode.NotFound);
+            await WriteResponseAsync<ResponseBase>(context, response, HttpStatusCode.NotFound);
 
-        //}
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Unhandled exception occurred");

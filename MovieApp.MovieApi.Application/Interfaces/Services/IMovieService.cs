@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MovieApp.MovieApi.Application.Interfaces;
+namespace MovieApp.MovieApi.Application.Interfaces.Services;
 public interface IMovieService
 {
     Task<MovieDetails> GetMovieByIdAsync(Guid id);

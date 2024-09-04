@@ -2,7 +2,7 @@
 using MovieApp.MovieApi.API.Query;
 using MovieApp.MovieApi.API.QueryParams;
 using MovieApp.MovieApi.API.Response;
-using MovieApp.MovieApi.Application.Interfaces;
+using MovieApp.MovieApi.Application.Interfaces.Facades;
 using MovieApp.MovieApi.Application.Pagination.Interface;
 using MovieApp.MovieApi.Application.Queries.Movie;
 using MovieApp.MovieApi.Application.Queries.Rating;

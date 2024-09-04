@@ -1,4 +1,5 @@
-﻿using MovieApp.MovieApi.Application.Interfaces;
+﻿using MovieApp.MovieApi.Application.Interfaces.Facades;
+using MovieApp.MovieApi.Application.Interfaces.Services;
 using MovieApp.MovieApi.Application.Pagination;
 using MovieApp.MovieApi.Application.Pagination.Interface;
 using MovieApp.MovieApi.Application.Queries.Movie;
