@@ -24,14 +24,6 @@ public class MovieController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Get([FromRoute] Guid id)
-    {
-        var movie = await _movieFacade.GetMovieById(id);
-
-        return Ok(ResponseBase<MovieDetails>.ResponseBaseFactory(movie, System.Net.HttpStatusCode.OK));
-    }
-
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] GetMoviesQueryParams getMoviesQueryParams)
     {
@@ -49,6 +41,14 @@ public class MovieController : ControllerBase
         var movies = await _movieFacade.GetMoviesByQuery(getMoviesQuery);
 
         return Ok(ResponseBase<IPagedList<MovieSummary>>.ResponseBaseFactory(movies, HttpStatusCode.OK));
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get([FromRoute] Guid id)
+    {
+        var movie = await _movieFacade.GetMovieById(id);
+
+        return Ok(ResponseBase<MovieDetails>.ResponseBaseFactory(movie, System.Net.HttpStatusCode.OK));
     }
 
     [HttpGet("{id}/ratings")]

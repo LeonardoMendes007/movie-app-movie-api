@@ -6,8 +6,8 @@ using MovieApp.MovieApi.Domain.Interfaces.Repositories;
 namespace MovieApp.MovieApi.Infra.Persistence.Repositories;
 public class GenreRepository : IGenreRepository
 {
-    private readonly MovieAppDbContext _context;
-    public GenreRepository(MovieAppDbContext context)
+    private readonly MovieAppReadDbContext _context;
+    public GenreRepository(MovieAppReadDbContext context)
     {
         _context = context;
     }

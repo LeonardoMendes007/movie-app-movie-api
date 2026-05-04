@@ -7,30 +7,30 @@ using MovieApp.MovieApi.Application.Queries.Movie;
 using MovieApp.MovieApi.Application.Queries.Rating;
 using MovieApp.MovieApi.Application.Responses.Details;
 using MovieApp.MovieApi.Application.Responses.Summary;
-using MovieApp.MovieApi.Domain.Interfaces.UnitOfWork;
+using MovieApp.MovieApi.Domain.Interfaces.Repositories;
 
 namespace MovieApp.MovieApi.Application.Services;
 public class MovieService : IMovieService
 {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMovieRepository _movieRepository;
     private readonly IMapper _mapper;
 
-    public MovieService(IUnitOfWork unitOfWork, IMapper mapper)
+    public MovieService(IMovieRepository movieRepository, IMapper mapper)
     {
-        _unitOfWork = unitOfWork;
+        _movieRepository = movieRepository;
         _mapper = mapper;
     }
 
     public async Task<MovieDetails> GetMovieByIdAsync(Guid id)
     {
-        var movie = await _unitOfWork.MovieRepository.FindByIdAsync(id);
+        var movie = await _movieRepository.FindByIdAsync(id);
 
         return _mapper.Map<MovieDetails>(movie);    
     }
 
     public async Task<IPagedList<MovieSummary>> GetMoviesByQuery(GetMoviesQuery query)
     {
-        var moviesQuery = _unitOfWork.MovieRepository.FindAll();
+        var moviesQuery = _movieRepository.FindAll();
 
         if (!string.IsNullOrWhiteSpace(query.SearchTerm))
         {
@@ -70,7 +70,7 @@ public class MovieService : IMovieService
 
     public async Task<IPagedList<RatingSummary>> GetRatingByQuery(GetRatingByMovieQuery query)
     {
-        var ratingsQuery = _unitOfWork.MovieRepository.FindAllRatingsById(query.MovieId);
+        var ratingsQuery = _movieRepository.FindAllRatingsById(query.MovieId);
 
         if (query.Sort.Any())
         {
@@ -91,13 +91,5 @@ public class MovieService : IMovieService
         var pagedListRating = PagedList<RatingSummary>.CreatePagedList(ratingsSummaryQuery, query.Page, query.PageSize);
 
         return pagedListRating;
-    }
-
-    public async Task IncrementViewsAsync(Guid id)
-    {
-        var movie = await _unitOfWork.MovieRepository.FindByIdAsync(id);
-        movie.Views++;
-
-        await _unitOfWork.CommitAsync();
     }
 }

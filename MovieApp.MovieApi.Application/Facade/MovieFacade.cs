@@ -26,7 +26,7 @@ public class MovieFacade : IMovieFacade
 
         if (movieCache is not null)
         {
-            await _movieService.IncrementViewsAsync(id);
+            //await _movieService.IncrementViewsAsync(id);
             return movieCache;
         }
 
@@ -37,7 +37,7 @@ public class MovieFacade : IMovieFacade
             throw new Exception();
         }
 
-        _ = _movieService.IncrementViewsAsync(id);
+        //_ = _movieService.IncrementViewsAsync(id);
 
         await _cachingService.SetAsync($"Movie_{id.ToString()}", movieDetails);
 

@@ -6,8 +6,8 @@ using MovieApp.MovieApi.Domain.Interfaces.Repositories;
 namespace MovieApp.MovieApi.Infra.Persistence.Repositories;
 public class MovieRepository : IMovieRepository
 {
-    private readonly MovieAppDbContext _context;
-    public MovieRepository(MovieAppDbContext context)
+    private readonly MovieAppReadDbContext _context;
+    public MovieRepository(MovieAppReadDbContext context)
     {
         _context = context;
     }
@@ -24,7 +24,7 @@ public class MovieRepository : IMovieRepository
 
     public async Task<Movie> FindByIdAsync(Guid id)
     {
-        return await _context.Movies.FirstAsync(m => m.Id == id);
+        return await _context.Movies.Include(m => m.Genries).FirstAsync(m => m.Id == id);
     }
 
 }

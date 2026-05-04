@@ -8,7 +8,7 @@
 	
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.4" />
-		<PackageReference Include="MovieApp.Infra.Data" Version="1.1.1" />
+		<PackageReference Include="MovieApp.Infra.Data" Version="2.0.4" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="StackExchange.Redis" Version="2.7.33" />
 	</ItemGroup>
